@@ -16,6 +16,9 @@ import {
   CRow,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { registration } from "../../../store/actions";
 
 const popover = (
   <Popover.Content>
@@ -31,8 +34,12 @@ const popover = (
 );
 
 const Register = (props) => {
+  const { action, registration } = props;
+
+  console.log(props);
   const postParams = (values, resetForm) => {
-    console.log(values);
+    // console.log(values);
+    action.registration(values);
     resetForm({ values: "" });
   };
 
@@ -133,4 +140,21 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+const mapStateToProps = ({ registration }) => {
+  {
+    return {
+      registration,
+    };
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    registration,
+  };
+  return {
+    action: bindActionCreators(actions, dispatch),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
