@@ -9,6 +9,7 @@ export default function* (url, method = "GET", data = null, headers = "") {
     data,
     headers: {
       Authorization: headers,
+      "Content-Type": "application/json",
     },
   };
 
