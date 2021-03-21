@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Popover } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
@@ -22,7 +22,21 @@ import {
 import CIcon from "@coreui/icons-react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { registration } from "../../../store/actions";
+import { registration, getRoles } from "../../../store/actions";
+import { get } from "enzyme/build/configuration";
+
+const UserDropDown = (props) => {
+  return (
+    <CDropdown>
+      <CDropdownToggle caret color="info">
+        Tipo de Usuario
+      </CDropdownToggle>
+      <CDropdownMenu>
+        <CDropdownItem>Another Action</CDropdownItem>
+      </CDropdownMenu>
+    </CDropdown>
+  );
+};
 
 const popover = (
   <Popover.Content>
@@ -37,21 +51,16 @@ const popover = (
   </Popover.Content>
 );
 
-const UserDropDown = () => {
-  return (
-    <CDropdown>
-      <CDropdownToggle caret color="info">
-        Tipo de Usuario
-      </CDropdownToggle>
-      <CDropdownMenu>
-        <CDropdownItem>Another Action</CDropdownItem>
-      </CDropdownMenu>
-    </CDropdown>
-  );
-};
-
 const Register = (props) => {
-  const { action, registration } = props;
+  const { action, registration, getRoles } = props;
+
+  const loadData = () => {
+    if (getRoles.result === null || getRoles.errors) action.getRoles();
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const postParams = (values, resetForm) => {
     action.registration(values);
@@ -102,6 +111,7 @@ const Register = (props) => {
                         </CInputGroupPrepend>
                         <Field
                           component={UserDropDown}
+                          width="hello"
                           name="roleType"
                           className="form-control"
                           placeholder="Tipo de Usuario"
@@ -168,10 +178,11 @@ const Register = (props) => {
   );
 };
 
-const mapStateToProps = ({ registration }) => {
+const mapStateToProps = ({ registration, getRoles }) => {
   {
     return {
       registration,
+      getRoles,
     };
   }
 };
@@ -179,6 +190,7 @@ const mapStateToProps = ({ registration }) => {
 const mapDispatchToProps = (dispatch) => {
   const actions = {
     registration,
+    getRoles,
   };
   return {
     action: bindActionCreators(actions, dispatch),
