@@ -1,7 +1,7 @@
 import React from "react";
 import * as Yup from "yup";
 import { Popover } from "react-bootstrap";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import {
   CButton,
   CCard,
@@ -9,6 +9,10 @@ import {
   CCardFooter,
   CCol,
   CContainer,
+  CDropdown,
+  CDropdownItem,
+  CDropdownMenu,
+  CDropdownToggle,
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
@@ -33,12 +37,23 @@ const popover = (
   </Popover.Content>
 );
 
+const UserDropDown = () => {
+  return (
+    <CDropdown>
+      <CDropdownToggle caret color="info">
+        Tipo de Usuario
+      </CDropdownToggle>
+      <CDropdownMenu>
+        <CDropdownItem>Another Action</CDropdownItem>
+      </CDropdownMenu>
+    </CDropdown>
+  );
+};
+
 const Register = (props) => {
   const { action, registration } = props;
 
-  console.log(props);
   const postParams = (values, resetForm) => {
-    // console.log(values);
     action.registration(values);
     resetForm({ values: "" });
   };
@@ -77,6 +92,19 @@ const Register = (props) => {
                           name="email"
                           type="text"
                           placeholder="Correo Electronico"
+                        />
+                      </CInputGroup>
+                      <CInputGroup className="mb-3">
+                        <CInputGroupPrepend>
+                          <CInputGroupText>
+                            <CIcon name="cil-envelope-closed" />
+                          </CInputGroupText>
+                        </CInputGroupPrepend>
+                        <Field
+                          component={UserDropDown}
+                          name="roleType"
+                          className="form-control"
+                          placeholder="Tipo de Usuario"
                         />
                       </CInputGroup>
                       <CInputGroup className="mb-3">
