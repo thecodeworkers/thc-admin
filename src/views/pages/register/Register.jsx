@@ -52,7 +52,6 @@ const Register = (props) => {
   }, []);
 
   const postParams = (values, resetForm) => {
-    console.log(values);
     action.registration(values);
     resetForm({ values: "" });
   };
@@ -108,7 +107,7 @@ const Register = (props) => {
                         >
                           <option>Tipo de Usuario</option>
                           {getRoles.result.map((res) => {
-                            if (res.type !== "admin") {
+                            if (res.type !== "Admin") {
                               return (
                                 <option key={res.id} value={res.type}>
                                   {res.type}
