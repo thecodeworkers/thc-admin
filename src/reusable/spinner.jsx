@@ -1,18 +1,13 @@
 import React from "react";
+import { css } from "@emotion/react";
+import { BeatLoader } from "react-spinners";
 
-import { CSpinner } from "@coreui/react";
-
-export default () => (
-  <div className="d-flex justify-content-between align-items-center">
-    <CSpinner color="success" size="sm" />
-    <CSpinner color="info" />
-    <CSpinner color="primary" style={{ width: "4rem", height: "4rem" }} />
-    <CSpinner size="sm" variant="grow" />
-    <CSpinner color="warning" variant="grow" />
-    <CSpinner
-      style={{ width: "4rem", height: "4rem" }}
-      color="danger"
-      variant="grow"
-    />
-  </div>
-);
+export default () => {
+  const override = css`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  `;
+  return <BeatLoader size={30} css={override} color={"red"} />;
+};
