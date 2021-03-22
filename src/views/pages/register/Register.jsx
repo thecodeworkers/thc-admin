@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { Popover } from "react-bootstrap";
+import { Dropdown, Popover } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import {
   CButton,
@@ -9,10 +9,6 @@ import {
   CCardFooter,
   CCol,
   CContainer,
-  CDropdown,
-  CDropdownItem,
-  CDropdownMenu,
-  CDropdownToggle,
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
@@ -24,20 +20,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { registration, getRoles } from "../../../store/actions";
 import Spinner from "../../../reusable/spinner";
-
-const UserDropDown = (props) => {
-  console.log(props.roles);
-  return (
-    <CDropdown>
-      <CDropdownToggle caret color="info">
-        Tipo de Usuario
-      </CDropdownToggle>
-      <CDropdownMenu>
-        <CDropdownItem>Another Action</CDropdownItem>
-      </CDropdownMenu>
-    </CDropdown>
-  );
-};
+import "./regis_styles.css";
 
 const popover = (
   <Popover.Content>
@@ -59,7 +42,9 @@ const Register = (props) => {
 
   const loadData = () => {
     if (getRoles.result === null || getRoles.errors) action.getRoles();
-    setFetchData(false);
+    setTimeout(() => {
+      setFetchData(true);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -67,12 +52,14 @@ const Register = (props) => {
   }, []);
 
   const postParams = (values, resetForm) => {
+    console.log(values);
     action.registration(values);
     resetForm({ values: "" });
   };
 
   const formValues = {
     email: "",
+    roleType: "",
     password: "",
     confirmPassword: "",
   };
@@ -89,11 +76,11 @@ const Register = (props) => {
                   postParams(values, resetForm);
                 }}
               >
-                {({ errors, touched, handleBlur, handleChange }) => (
+                {({ errors, touched, handleBlur, handleChange, values }) => (
                   <CCardBody className="p-4">
                     <h1>Register</h1>
                     <p className="text-muted">Create your account</p>
-                    <Form>
+                    <Form onChange={handleChange}>
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend>
                           <CInputGroupText>
@@ -110,16 +97,26 @@ const Register = (props) => {
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend>
                           <CInputGroupText>
-                            <CIcon name="cil-envelope-closed" />
+                            <CIcon name="cil-user" />
                           </CInputGroupText>
                         </CInputGroupPrepend>
                         <Field
-                          component={UserDropDown}
-                          roles={getRoles.result}
+                          as="select"
                           name="roleType"
-                          className="form-control"
+                          className="form-control _role-dropdown"
                           placeholder="Tipo de Usuario"
-                        />
+                        >
+                          <option>Tipo de Usuario</option>
+                          {getRoles.result.map((res) => {
+                            if (res.type !== "admin") {
+                              return (
+                                <option key={res.id} value={res.type}>
+                                  {res.type}
+                                </option>
+                              );
+                            }
+                          })}
+                        </Field>
                       </CInputGroup>
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend>
