@@ -23,9 +23,10 @@ import CIcon from "@coreui/icons-react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { registration, getRoles } from "../../../store/actions";
-import { get } from "enzyme/build/configuration";
+import Spinner from "../../../reusable/spinner";
 
 const UserDropDown = (props) => {
+  console.log(props.roles);
   return (
     <CDropdown>
       <CDropdownToggle caret color="info">
@@ -54,8 +55,11 @@ const popover = (
 const Register = (props) => {
   const { action, registration, getRoles } = props;
 
+  const [fetchData, setFetchData] = useState(false);
+
   const loadData = () => {
     if (getRoles.result === null || getRoles.errors) action.getRoles();
+    setFetchData(false);
   };
 
   useEffect(() => {
@@ -73,7 +77,7 @@ const Register = (props) => {
     confirmPassword: "",
   };
 
-  return (
+  return fetchData ? (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
@@ -111,7 +115,7 @@ const Register = (props) => {
                         </CInputGroupPrepend>
                         <Field
                           component={UserDropDown}
-                          width="hello"
+                          roles={getRoles.result}
                           name="roleType"
                           className="form-control"
                           placeholder="Tipo de Usuario"
@@ -175,6 +179,8 @@ const Register = (props) => {
         </CRow>
       </CContainer>
     </div>
+  ) : (
+    <Spinner />
   );
 };
 
