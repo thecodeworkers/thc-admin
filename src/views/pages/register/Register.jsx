@@ -93,17 +93,17 @@ const Register = (props) => {
                           placeholder="Correo Electronico"
                         />
                       </CInputGroup>
-                      <CInputGroup className="mb-3">
+                      <div className="_input-group-mb3">
                         <CInputGroupPrepend>
-                          <CInputGroupText>
+                          <div className="_input-group-text">
                             <CIcon name="cil-user" />
-                          </CInputGroupText>
+                          </div>
                         </CInputGroupPrepend>
                         <Field
                           as="select"
                           name="roleType"
-                          className="form-control _role-dropdown"
                           placeholder="Tipo de Usuario"
+                          className="_dropdown-space"
                         >
                           <option>Tipo de Usuario</option>
                           {getRoles.result.map((res) => {
@@ -116,7 +116,7 @@ const Register = (props) => {
                             }
                           })}
                         </Field>
-                      </CInputGroup>
+                      </div>
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend>
                           <CInputGroupText>
