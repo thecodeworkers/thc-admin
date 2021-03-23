@@ -61,21 +61,21 @@
   border-bottom-left-radius: 0;
 }
 select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    cursor: pointer;
-    background: transparent;
-        background-color: transparent;
-        background-position-x: 0%;
-        background-position-y: 0%;
-        background-repeat: repeat;
-        background-image: none;
-        background-clip: border-box;
-    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
-    background-repeat: no-repeat;
-    background-position-x: 100%;
-    background-position-y: 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background: transparent;
+  background-color: transparent;
+  background-position-x: 0%;
+  background-position-y: 0%;
+  background-repeat: repeat;
+  background-image: none;
+  background-clip: border-box;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 5px;
 }
 
 ._input-group-mb3 > ._dropdown-space {
@@ -85,4 +85,17 @@ select {
   width: 1%;
   min-width: 0;
   margin-bottom: 0;
+}
+
+._form-error-box {
+  border-radius: 4px;
+  position: relative;
+  top: -16px;
+  margin-left: -6px;
+}
+
+._form-error-message {
+  position: relative;
+  top: 3px;
+  color: #ff0000;
 }
