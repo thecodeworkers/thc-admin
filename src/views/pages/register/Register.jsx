@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { Dropdown, Popover } from "react-bootstrap";
+import { Popover } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import {
   CButton,
@@ -49,7 +49,7 @@ const Register = (props) => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  });
 
   const postParams = (values, resetForm) => {
     action.registration(values);
@@ -63,6 +63,30 @@ const Register = (props) => {
     confirmPassword: "",
   };
 
+  const registrationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email()
+      .required("Please enter email")
+      .matches(
+        /^[\S]+@([\w-]+\.)+[\w-]{2,4}$/,
+        "Please enter a valid email address"
+      ),
+    roleType: Yup.string().required("Please select profession"),
+    password: Yup.string()
+      .min(8, "Password has to be at least 8 characters")
+      .required("Please enter password")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[~`!@#$%^&*+=_:;”’?/<>,./|]).*$/,
+        "Invalid password. Please check rules"
+      ),
+    confirmPassword: Yup.string()
+      .min(8, "Invalid Password")
+      .required("Please enter password")
+      .test("passwords-match", "Passwords must match", function (value) {
+        return this.parent.password === value;
+      }),
+  });
+
   return fetchData ? (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -74,6 +98,7 @@ const Register = (props) => {
                 onSubmit={(values, { resetForm }) => {
                   postParams(values, resetForm);
                 }}
+                validationSchema={registrationSchema}
               >
                 {({ errors, touched, handleBlur, handleChange, values }) => (
                   <CCardBody className="p-4">
@@ -114,7 +139,8 @@ const Register = (props) => {
                                 </option>
                               );
                             }
-                          })}
+                            return null;
+                          }, {})}
                         </Field>
                       </div>
                       <CInputGroup className="mb-3">
@@ -181,12 +207,10 @@ const Register = (props) => {
 };
 
 const mapStateToProps = ({ registration, getRoles }) => {
-  {
-    return {
-      registration,
-      getRoles,
-    };
-  }
+  return {
+    registration,
+    getRoles,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
