@@ -9,17 +9,18 @@ import {
   CCardFooter,
   CCol,
   CContainer,
-  CInputGroup,
   CInputGroupPrepend,
-  CInputGroupText,
-  CPopover,
   CRow,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { registration, getRoles } from "../../../store/actions";
-import Spinner from "../../../reusable/spinner";
+import Loading from "../../../reusable/spinners/beatloader";
+import {
+  FormInputField,
+  ErrorMessageSpace,
+} from "../../../reusable/form/input";
 import "./regis_styles.css";
 
 const popover = (
@@ -34,6 +35,8 @@ const popover = (
     </div>
   </Popover.Content>
 );
+
+const popoverContent = [popover, true, "right"];
 
 const Register = (props) => {
   const { action, registration, getRoles } = props;
@@ -65,26 +68,37 @@ const Register = (props) => {
 
   const registrationSchema = Yup.object().shape({
     email: Yup.string()
-      .email()
-      .required("Please enter email")
+      .email("Por favor ingrese un correo electrónico valido")
+      .required("Por favor ingrese correo electrónico")
       .matches(
         /^[\S]+@([\w-]+\.)+[\w-]{2,4}$/,
-        "Please enter a valid email address"
+        "Por favor ingrese un correo electrónico valido"
       ),
-    roleType: Yup.string().required("Please select profession"),
+    roleType: Yup.string()
+      .required("Por favor seleccione que tipo de usuario eres")
+      .test(
+        "select-real-value",
+        "Por favor seleccione que tipo de usuario eres",
+        function (value) {
+          if (value === "Tipo de Usuario") return false;
+          else return true;
+        }
+      ),
     password: Yup.string()
-      .min(8, "Password has to be at least 8 characters")
-      .required("Please enter password")
+      .min(8, "La contraseña necesita minimo 8 caracteres")
+      .required("Por favor ingrese una contraseña")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[~`!@#$%^&*+=_:;”’?/<>,./|]).*$/,
-        "Invalid password. Please check rules"
+        "Contraseña no es valida. Por favor revisar reglas"
       ),
-    confirmPassword: Yup.string()
-      .min(8, "Invalid Password")
-      .required("Please enter password")
-      .test("passwords-match", "Passwords must match", function (value) {
+    confirmPassword: Yup.string().test(
+      "passwords-match",
+      "Contraseña no es igual",
+      function (value) {
+        if (this.parent.password === undefined) return true;
         return this.parent.password === value;
-      }),
+      }
+    ),
   });
 
   return fetchData ? (
@@ -100,24 +114,19 @@ const Register = (props) => {
                 }}
                 validationSchema={registrationSchema}
               >
-                {({ errors, touched, handleBlur, handleChange, values }) => (
+                {({ handleChange }) => (
                   <CCardBody className="p-4">
                     <h1>Register</h1>
                     <p className="text-muted">Create your account</p>
                     <Form onChange={handleChange}>
-                      <CInputGroup className="mb-3">
-                        <CInputGroupPrepend>
-                          <CInputGroupText>
-                            <CIcon name="cil-envelope-closed" />
-                          </CInputGroupText>
-                        </CInputGroupPrepend>
-                        <Field
-                          className="form-control"
-                          name="email"
-                          type="text"
-                          placeholder="Correo Electronico"
-                        />
-                      </CInputGroup>
+                      <FormInputField
+                        icon="cil-envelope-closed"
+                        name="email"
+                        inputType="text"
+                        placeholder="Correo Electronico"
+                        popover={null}
+                      />
+                      <ErrorMessageSpace name="email" />
                       <div className="_input-group-mb3">
                         <CInputGroupPrepend>
                           <div className="_input-group-text">
@@ -127,10 +136,11 @@ const Register = (props) => {
                         <Field
                           as="select"
                           name="roleType"
+                          type="text"
                           placeholder="Tipo de Usuario"
                           className="_dropdown-space"
                         >
-                          <option>Tipo de Usuario</option>
+                          <option defaultValue>Tipo de Usuario</option>
                           {getRoles.result.map((res) => {
                             if (res.type !== "Admin") {
                               return (
@@ -143,38 +153,23 @@ const Register = (props) => {
                           }, {})}
                         </Field>
                       </div>
-                      <CInputGroup className="mb-3">
-                        <CInputGroupPrepend>
-                          <CInputGroupText>
-                            <CIcon name="cil-lock-locked" />
-                          </CInputGroupText>
-                        </CInputGroupPrepend>
-                        <CPopover
-                          placement="right"
-                          content={popover}
-                          trigger="click"
-                        >
-                          <Field
-                            className="form-control"
-                            name="password"
-                            type="password"
-                            placeholder="Contraseña"
-                          />
-                        </CPopover>
-                      </CInputGroup>
-                      <CInputGroup className="mb-3">
-                        <CInputGroupPrepend>
-                          <CInputGroupText>
-                            <CIcon name="cil-lock-locked" />
-                          </CInputGroupText>
-                        </CInputGroupPrepend>
-                        <Field
-                          className="form-control"
-                          name="confirmPassword"
-                          type="password"
-                          placeholder="Confirme Contraseña"
-                        />
-                      </CInputGroup>
+                      <ErrorMessageSpace name="roleType" />
+                      <FormInputField
+                        icon="cil-lock-locked"
+                        name="password"
+                        inputType="password"
+                        placeholder="Contraseña"
+                        popover={popoverContent}
+                      />
+                      <ErrorMessageSpace name="password" />
+                      <FormInputField
+                        icon="cil-lock-locked"
+                        name="confirmPassword"
+                        inputType="password"
+                        placeholder="Contraseña"
+                        popover={null}
+                      />
+                      <ErrorMessageSpace name="confirmPassword" />
                       <CButton type="submit" color="success" block>
                         Create Account
                       </CButton>
@@ -202,7 +197,7 @@ const Register = (props) => {
       </CContainer>
     </div>
   ) : (
-    <Spinner />
+    <Loading color="#ff0000" />
   );
 };
 
