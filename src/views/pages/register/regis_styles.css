@@ -99,3 +99,13 @@ select {
   top: 3px;
   color: #ff0000;
 }
+
+._form-title {
+  color: #768192 !important;
+  margin-bottom: 10px !important;
+}
+
+._thc-title {
+  margin: 40px auto 40px auto;
+  padding: 0px 35px 0 35px;
+}
