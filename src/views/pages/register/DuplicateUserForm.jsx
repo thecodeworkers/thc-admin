@@ -10,7 +10,7 @@ const DuplicateUserForm = (props) => {
           <h2>Usuario ya existe!</h2>
           <p>
             Usted indicó que es un usuario nuevo, pero una cuenta ya existe con
-            este correo electrónico {props.email}
+            este correo electrónico <strong>{props.email}</strong>
           </p>
         </div>
         <h5>Eres un usuario existente?</h5>
