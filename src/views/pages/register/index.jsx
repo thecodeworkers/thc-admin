@@ -43,7 +43,7 @@ const Register = (props) => {
   };
 
   const rerouteToRegisterForm = (value) => {
-    if (value === true) setResponse({ isValid: "", email: "", isLoading: "" });
+    if (value === true) setResponse({ isValid: "", email: "" });
   };
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const Register = (props) => {
   // }, [response]);
 
   const postParams = (values, resetForm) => {
-    handleUserChange("isLoading", true);
+    // handleUserChange("isLoading", true);
     handleUserChange("email", values.email);
     action.registration(values);
     resetForm({ values: "" });
@@ -83,8 +83,8 @@ const Register = (props) => {
   const formValues = {
     email: "",
     roleType: "",
-    password: "",
-    confirmPassword: "",
+    password: "Cimabel1$",
+    confirmPassword: "Cimabel1$",
   };
 
   const registrationSchema = Yup.object().shape({
