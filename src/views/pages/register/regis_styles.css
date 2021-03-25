@@ -109,3 +109,16 @@ select {
   margin: 40px auto 40px auto;
   padding: 0px 35px 0 35px;
 }
+
+._duplicate-user-body {
+  flex-direction: column;
+}
+
+._url-styles {
+  color: blue;
+  cursor: pointer;
+}
+
+._url-styles:hover {
+  text-decoration: underline;
+}

@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import {
   CButton,
   CCard,
-  CCardBody,
   CCardFooter,
   CCol,
   CContainer,
@@ -14,6 +13,7 @@ import { bindActionCreators } from "redux";
 import { registration, getRoles } from "../../../store/actions";
 import Loading from "../../../reusable/spinners/beatloader";
 import RegisterForm from "./Form";
+import DuplicateUserForm from "./DuplicateUserForm";
 import "./regis_styles.css";
 
 const Register = (props) => {
@@ -21,12 +21,29 @@ const Register = (props) => {
 
   const [fetchData, setFetchData] = useState(false);
 
+  const [duplicateUser, setDuplicateUser] = useState(false);
+
   const loadData = () => {
     if (getRoles.result === null || getRoles.errors) action.getRoles();
     setTimeout(() => {
       setFetchData(true);
     }, 2000);
   };
+
+  const rerouteToRegisterForm = (value) => {
+    if (value === true) setDuplicateUser(false);
+  };
+
+  useEffect(() => {
+    const checkRegistrationResponse = () => {
+      if (registration.error != null)
+        if (registration.error.status === 422) {
+          setDuplicateUser(true);
+          registration.error = null;
+        }
+    };
+    checkRegistrationResponse();
+  }, [registration]);
 
   useEffect(() => {
     loadData();
@@ -88,12 +105,19 @@ const Register = (props) => {
         <CRow className="justify-content-center">
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
-              {/* <RegisterForm
-                formValues={formValues}
-                postParams={postParams}
-                registrationSchema={registrationSchema}
-                getRolesArray={getRoles.result}
-              /> */}
+              {duplicateUser ? (
+                <DuplicateUserForm
+                  email="hi"
+                  reRouting={rerouteToRegisterForm}
+                />
+              ) : (
+                <RegisterForm
+                  formValues={formValues}
+                  postParams={postParams}
+                  registrationSchema={registrationSchema}
+                  getRolesArray={getRoles.result}
+                />
+              )}
               <CCardFooter className="p-4">
                 <CRow>
                   <CCol xs="12" sm="6">

@@ -23,7 +23,7 @@ function* registrationAsync(action) {
   } catch (error) {
     const payloadObject = {
       result: null,
-      error: error.response.data,
+      error: error.response,
     };
 
     yield put({
