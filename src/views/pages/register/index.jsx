@@ -12,8 +12,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { registration, getRoles } from "../../../store/actions";
 import Loading from "../../../reusable/spinners/beatloader";
+import RegisterFooter from "./Footer";
 import RegisterForm from "./RegisterForm";
-import DuplicateUserForm from "./DuplicateUserForm";
+import ResponseContainer from "./ReponseContainer";
+import { DuplicateUserBody, RegisterSuccessBody } from "./ResponseTypeBody";
 import "./regis_styles.css";
 
 const Register = (props) => {
@@ -21,8 +23,8 @@ const Register = (props) => {
 
   const [fetchData, setFetchData] = useState(false);
 
-  const [duplicateUser, setDuplicateUser] = useState({
-    isDuplicate: true,
+  const [response, setResponse] = useState({
+    isValid: "",
     email: "",
   });
 
@@ -34,23 +36,27 @@ const Register = (props) => {
   };
 
   const handleUserChange = (name, value) => {
-    setDuplicateUser((prevState) => ({
+    setResponse((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
   const rerouteToRegisterForm = (value) => {
-    if (value === true) setDuplicateUser({ isDuplicate: false, email: "" });
+    if (value === true) setResponse({ isValid: "", email: "", isLoading: "" });
   };
 
   useEffect(() => {
     const checkRegistrationResponse = () => {
       if (registration.error != null)
         if (registration.error.status === 422) {
-          handleUserChange("isDuplicate", true);
+          handleUserChange("isValid", false);
           registration.error = null;
         }
+      if (registration.result != null) {
+        handleUserChange("isValid", true);
+        registration.result = null;
+      }
     };
     checkRegistrationResponse();
   }, [registration]);
@@ -59,9 +65,18 @@ const Register = (props) => {
     loadData();
   });
 
+  // useEffect(() => {
+  //   if (response.isValid !== "") {
+  //     setTimeout(() => {
+  //       handleUserChange("isLoading", true);
+  //     }, 1000);
+  //   }
+  // }, [response]);
+
   const postParams = (values, resetForm) => {
-    action.registration(values);
+    handleUserChange("isLoading", true);
     handleUserChange("email", values.email);
+    action.registration(values);
     resetForm({ values: "" });
   };
 
@@ -116,33 +131,30 @@ const Register = (props) => {
         <CRow className="justify-content-center">
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
-              {duplicateUser.isDuplicate ? (
-                <DuplicateUserForm
-                  email={duplicateUser.email}
-                  reRouting={rerouteToRegisterForm}
-                />
+              {response.isValid === "" ? (
+                <>
+                  <RegisterForm
+                    formValues={formValues}
+                    postParams={postParams}
+                    registrationSchema={registrationSchema}
+                    getRolesArray={getRoles.result}
+                  />
+                  <RegisterFooter />
+                </>
               ) : (
-                <RegisterForm
-                  formValues={formValues}
-                  postParams={postParams}
-                  registrationSchema={registrationSchema}
-                  getRolesArray={getRoles.result}
+                <ResponseContainer
+                  body={
+                    response.isValid ? (
+                      <RegisterSuccessBody email={response.email} />
+                    ) : (
+                      <DuplicateUserBody
+                        email={response.email}
+                        reRouting={rerouteToRegisterForm}
+                      />
+                    )
+                  }
                 />
               )}
-              <CCardFooter className="p-4">
-                <CRow>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-facebook mb-1" block>
-                      <span>facebook</span>
-                    </CButton>
-                  </CCol>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-twitter mb-1" block>
-                      <span>twitter</span>
-                    </CButton>
-                  </CCol>
-                </CRow>
-              </CCardFooter>
             </CCard>
           </CCol>
         </CRow>

@@ -122,3 +122,35 @@ select {
 ._url-styles:hover {
   text-decoration: underline;
 }
+
+._mail-image {
+  background: rgba(0, 0, 0, 0)
+    url("https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.223/static/media/check-your-email-open-letter.4191d109.svg")
+    no-repeat scroll center bottom;
+  height: 88px;
+  margin-bottom: 25px;
+}
+
+._mail-message {
+  font-size: 1.14286em;
+  font-style: inherit;
+  line-height: 1.25;
+  color: rgb(23, 43, 77);
+  font-weight: 600;
+  letter-spacing: -0.006em;
+  margin-top: 4px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 25px;
+}
+
+._success-body-footer {
+  text-align: center;
+  flex-direction: column i !important;
+}
+
+._success-body-footer-p {
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
+}
