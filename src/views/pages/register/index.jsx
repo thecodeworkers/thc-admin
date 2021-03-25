@@ -21,7 +21,10 @@ const Register = (props) => {
 
   const [fetchData, setFetchData] = useState(false);
 
-  const [duplicateUser, setDuplicateUser] = useState(false);
+  const [duplicateUser, setDuplicateUser] = useState({
+    isDuplicate: false,
+    email: "",
+  });
 
   const loadData = () => {
     if (getRoles.result === null || getRoles.errors) action.getRoles();
@@ -30,15 +33,22 @@ const Register = (props) => {
     }, 2000);
   };
 
+  const handleUserChange = (name, value) => {
+    setDuplicateUser((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const rerouteToRegisterForm = (value) => {
-    if (value === true) setDuplicateUser(false);
+    if (value === true) setDuplicateUser({ isDuplicate: false, email: "" });
   };
 
   useEffect(() => {
     const checkRegistrationResponse = () => {
       if (registration.error != null)
         if (registration.error.status === 422) {
-          setDuplicateUser(true);
+          handleUserChange("isDuplicate", true);
           registration.error = null;
         }
     };
@@ -51,6 +61,7 @@ const Register = (props) => {
 
   const postParams = (values, resetForm) => {
     action.registration(values);
+    handleUserChange("email", values.email);
     resetForm({ values: "" });
   };
 
@@ -105,9 +116,9 @@ const Register = (props) => {
         <CRow className="justify-content-center">
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
-              {duplicateUser ? (
+              {duplicateUser.isDuplicate ? (
                 <DuplicateUserForm
-                  email="hi"
+                  email={duplicateUser.email}
                   reRouting={rerouteToRegisterForm}
                 />
               ) : (

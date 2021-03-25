@@ -10,20 +10,20 @@ const DuplicateUserForm = (props) => {
           <h2>Usuario ya existe!</h2>
           <p>
             Usted indicó que es un usuario nuevo, pero una cuenta ya existe con
-            este correo electronico {props.email}
+            este correo electrónico {props.email}
           </p>
         </div>
-        <h5>Are you a returning customer?</h5>
+        <h5>Eres un usuario existente?</h5>
         <div style={{ marginBottom: "15px" }}>
-          <p style={{ marginBottom: "4px" }}>Sign-In</p>
-          <p style={{ marginBottom: "4px" }}> Forgot your password?</p>
+          <p style={{ marginBottom: "4px" }}>Ingresa</p>
+          <p style={{ marginBottom: "4px" }}>Olvidaste tu contraseña?</p>
         </div>
-        <h5>New Customer</h5>
+        <h5>Nuevo Usuario</h5>
         <div style={{ marginBottom: "15px" }}>
           <span>
-            Create a new account with a{" "}
+            Crea una cuenta nueva con otro{" "}
             <span className="_url-styles" onClick={() => props.reRouting(true)}>
-              different e-mail address
+              correo electrónico distinto
             </span>
           </span>
         </div>
