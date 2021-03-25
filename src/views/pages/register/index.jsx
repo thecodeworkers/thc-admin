@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { registration, getRoles } from "../../../store/actions";
 import Loading from "../../../reusable/spinners/beatloader";
-import RegisterForm from "./Form";
+import RegisterForm from "./RegisterForm";
 import DuplicateUserForm from "./DuplicateUserForm";
 import "./regis_styles.css";
 
@@ -22,7 +22,7 @@ const Register = (props) => {
   const [fetchData, setFetchData] = useState(false);
 
   const [duplicateUser, setDuplicateUser] = useState({
-    isDuplicate: false,
+    isDuplicate: true,
     email: "",
   });
 
