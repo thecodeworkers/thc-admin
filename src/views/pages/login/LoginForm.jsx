@@ -26,6 +26,14 @@ const LoginForm = (props) => {
               popover={null}
             />
             <ErrorMessageSpace name="email" />
+            <FormInputField
+              icon="cil-lock-locked"
+              name="password"
+              inputType="password"
+              placeholder="Contraseña"
+              popover={null}
+            />
+            <ErrorMessageSpace name="email" />
             <CRow>
               <CCol xs="6">
                 <CButton color="primary" className="px-4">

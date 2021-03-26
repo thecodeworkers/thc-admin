@@ -25,11 +25,13 @@ const Login = () => {
           <CCol md="8">
             <CCardGroup>
               <CCard className="p-2">
-                <div style={{ marginLeft: "10px", marginBottom: "10px" }}>
-                  <h1>Acceso</h1>
-                  <p className="text-muted">Ingrese a su cuenta</p>
-                </div>
-                <LoginForm />
+                <CCardBody>
+                  <div style={{ marginLeft: "17px" }}>
+                    <h1>Acceso</h1>
+                    <p className="text-muted">Ingrese a su cuenta</p>
+                  </div>
+                  <LoginForm />
+                </CCardBody>
               </CCard>
               <CCard
                 className="text-white bg-primary py-5 d-md-down-none"
