@@ -13,7 +13,7 @@ const LoginForm = (props) => {
       onSubmit={(values, { resetForm }) => {
         props.postParams(values, resetForm);
       }}
-      validationSchema={props.registrationSchema}
+      validationSchema={props.loginSchema}
     >
       {({ handleChange }) => (
         <CCardBody className="p-3">
@@ -33,11 +33,11 @@ const LoginForm = (props) => {
               placeholder="Contraseña"
               popover={null}
             />
-            <ErrorMessageSpace name="email" />
+            <ErrorMessageSpace name="password" />
             <CRow>
               <CCol xs="6">
-                <CButton color="primary" className="px-4">
-                  Login
+                <CButton type="submit" color="primary" className="px-4">
+                  Ingresar
                 </CButton>
               </CCol>
               <CCol xs="6" className="text-right">
