@@ -1,5 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { login } from "../../../store/actions";
+
 import * as Yup from "yup";
 import {
   CButton,
@@ -88,4 +92,19 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+const mapStateToProps = ({ login }) => {
+  return {
+    login,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    login,
+  };
+  return {
+    action: bindActionCreators(actions, dispatch),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

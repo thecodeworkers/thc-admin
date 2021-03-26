@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import {
-  CButton,
-  CCard,
-  CCardFooter,
-  CCol,
-  CContainer,
-  CRow,
-} from "@coreui/react";
+import { CCard, CCol, CContainer, CRow } from "@coreui/react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { registration, getRoles } from "../../../store/actions";
