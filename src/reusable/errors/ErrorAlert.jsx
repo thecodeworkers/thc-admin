@@ -3,8 +3,10 @@ import { CAlert } from "@coreui/react";
 
 const ErrorAlert = (props) => {
   return (
-    <CAlert color="info" closeButton>
-      {props.message}
+    <CAlert className={props.class} color="info" closeButton>
+      <p>
+        {props.message} {props.link}
+      </p>
     </CAlert>
   );
 };
