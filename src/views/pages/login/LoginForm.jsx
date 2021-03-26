@@ -41,8 +41,16 @@ const LoginForm = (props) => {
                 </CButton>
               </CCol>
               <CCol xs="6" className="text-right">
-                <CButton color="link" className="px-0">
-                  Forgot password?
+                <CButton
+                  color="link"
+                  className="px-0"
+                  style={{
+                    position: "relative",
+                    top: "-10px",
+                    textAlign: "right",
+                  }}
+                >
+                  Olvidaste tu contraseña?
                 </CButton>
               </CCol>
             </CRow>

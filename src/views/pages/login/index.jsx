@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -6,7 +6,6 @@ import { login } from "../../../store/actions";
 
 import * as Yup from "yup";
 import {
-  CAlert,
   CButton,
   CCard,
   CCardBody,
@@ -16,9 +15,43 @@ import {
   CRow,
 } from "@coreui/react";
 import LoginForm from "./LoginForm";
+import ErrorAlert from "../../../reusable/errors/ErrorAlert";
+import "../register/regis_styles.css";
+import "./login_styles.css";
+
+const ErrorLink = (props) => {
+  return props.linkType === 404 ? (
+    <Link to="/register">
+      <span className="_url-styles"> Registrate!</span>
+    </Link>
+  ) : props.linkType === 403 ? (
+    <span className="_url-styles"> Reenviar Link</span>
+  ) : props.linkType === 401 ? (
+    <span className="_url-styles"> Olvidaste tu contraseña?</span>
+  ) : null;
+};
 
 const Login = (props) => {
   const { action, login } = props;
+
+  const [showAlert, setShowAlert] = useState(false);
+
+  const [linkType, setLinkType] = useState({ message: "", status: null });
+
+  const displayAlert = () => {
+    setShowAlert(true);
+  };
+
+  useEffect(() => {
+    if (login.error != null) {
+      displayAlert();
+      setLinkType({
+        message: login.error.data.result,
+        status: login.error.status,
+      });
+      login.error = null;
+    }
+  }, [login, showAlert]);
 
   const loginSchema = Yup.object().shape({
     email: Yup.string()
@@ -32,6 +65,8 @@ const Login = (props) => {
   });
 
   const postParams = (values, resetForm) => {
+    setLinkType({ message: "", status: null });
+    setShowAlert(false);
     action.login(values);
     resetForm({ values: "" });
   };
@@ -53,6 +88,20 @@ const Login = (props) => {
                     <h1>Acceso</h1>
                     <p className="text-muted">Ingrese a su cuenta</p>
                   </div>
+                  {showAlert ? (
+                    <div
+                      style={{
+                        marginLeft: "17px",
+                        marginTop: "5px",
+                      }}
+                    >
+                      <ErrorAlert
+                        class="_zero-margin"
+                        message={linkType.message}
+                        link={<ErrorLink linkType={linkType.status} />}
+                      />
+                    </div>
+                  ) : null}
                   <LoginForm
                     formValues={formValues}
                     postParams={postParams}
@@ -78,7 +127,7 @@ const Login = (props) => {
                         active
                         tabIndex={-1}
                       >
-                        Register Now!
+                        Registrate Ahora!
                       </CButton>
                     </Link>
                   </div>

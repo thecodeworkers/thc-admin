@@ -154,3 +154,30 @@ select {
   margin-top: 15px !important;
   margin-bottom: 15px !important;
 }
+
+._btn-google {
+  color: #fff;
+  background-color: #f4b400;
+  border-color: #f4b400;
+}
+
+@media (hover: hover), (-ms-high-contrast: none) {
+  _btn-google:hover {
+    color: #fff;
+    background-color: #30497c;
+    border-color: #2d4373;
+  }
+}
+
+._btn-google:focus {
+  color: #fff;
+  background-color: #30497c;
+  border-color: #2d4373;
+  box-shadow: 0 0 0 0.2rem rgba(88, 114, 167, 0.5);
+}
+
+._btn-google.disabled {
+  color: #fff;
+  background-color: #3b5998;
+  border-color: #3b5998;
+}

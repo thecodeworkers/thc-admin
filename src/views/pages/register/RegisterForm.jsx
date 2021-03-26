@@ -1,7 +1,7 @@
 import React from "react";
 import { Popover } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
-import { CButton, CCardBody, CInputGroupPrepend } from "@coreui/react";
+import { CButton, CCardBody, CInputGroupPrepend, CRow } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import {
   FormInputField,
@@ -92,6 +92,30 @@ const RegisterForm = (props) => {
               Crear Tu Cuenta THC
             </CButton>
           </Form>
+          <CRow
+            style={{
+              justifyContent: "center",
+              paddingLeft: "14px",
+              paddingRight: "14px",
+            }}
+          >
+            <div
+              style={{
+                justifyContent: "center",
+                paddingTop: "14px",
+                paddingBottom: "14px",
+                color: "#768192",
+              }}
+            >
+              Or
+            </div>
+            <CButton className="btn-facebook mb-1" block>
+              <span>facebook</span>
+            </CButton>
+            <CButton className="_btn-google mb-1" block>
+              <span>google</span>
+            </CButton>
+          </CRow>
         </CCardBody>
       )}
     </Formik>

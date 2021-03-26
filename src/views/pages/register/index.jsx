@@ -4,8 +4,9 @@ import { CCard, CCol, CContainer, CRow } from "@coreui/react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { registration, getRoles } from "../../../store/actions";
+import { Link } from "react-router-dom";
 import Loading from "../../../reusable/spinners/beatloader";
-import RegisterFooter from "./Footer";
+import Footer from "../../../reusable/form/Footer";
 import RegisterForm from "./RegisterForm";
 import ResponseContainer from "./ReponseContainer";
 import { DuplicateUserBody, RegisterSuccessBody } from "./ResponseTypeBody";
@@ -132,7 +133,18 @@ const Register = (props) => {
                     registrationSchema={registrationSchema}
                     getRolesArray={getRoles.result}
                   />
-                  <RegisterFooter />
+                  <Footer
+                    message={
+                      <Link to="/login">
+                        <span
+                          className="_url-styles"
+                          style={{ color: "#768192" }}
+                        >
+                          Ya tienes una cuenta THC? Ingresa
+                        </span>
+                      </Link>
+                    }
+                  />
                 </>
               ) : (
                 <ResponseContainer
