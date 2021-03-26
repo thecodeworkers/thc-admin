@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { CCardBody } from "@coreui/react";
 import "./regis_styles.css";
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CButton, CCardFooter, CRow, CCol } from "@coreui/react";
+import { CCardFooter, CRow } from "@coreui/react";
 
 const Footer = (props) => {
   return (

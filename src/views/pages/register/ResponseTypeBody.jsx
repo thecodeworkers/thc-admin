@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { CButton, CCardFooter, CRow, CCol } from "@coreui/react";
+import React from "react";
+import { CCardFooter } from "@coreui/react";
 
 const DuplicateUserBody = (props) => (
   <>
