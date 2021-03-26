@@ -6,6 +6,7 @@ import { login } from "../../../store/actions";
 
 import * as Yup from "yup";
 import {
+  CAlert,
   CButton,
   CCard,
   CCardBody,
@@ -17,7 +18,7 @@ import {
 import LoginForm from "./LoginForm";
 
 const Login = (props) => {
-  const { action } = props;
+  const { action, login } = props;
 
   const loginSchema = Yup.object().shape({
     email: Yup.string()
@@ -31,7 +32,6 @@ const Login = (props) => {
   });
 
   const postParams = (values, resetForm) => {
-    // handleUserChange("isLoading", true);
     action.login(values);
     resetForm({ values: "" });
   };
