@@ -2,7 +2,6 @@ import { takeLatest, call, put } from "redux-saga/effects";
 import { LOGIN, LOGIN_ASYNC } from "./action-types";
 import { fetchService } from "../../utils";
 import { login } from "../../utils/path";
-import { navigate } from "@reach/router";
 
 function* loginAsync(action) {
   try {
@@ -16,18 +15,15 @@ function* loginAsync(action) {
       payload: payloadObject,
     });
   } catch (error) {
-    if (error.response === undefined) navigate("/error500");
-    else {
-      const payloadObject = {
-        result: null,
-        error: error.response.data,
-      };
+    const payloadObject = {
+      result: null,
+      error: error.response,
+    };
 
-      yield put({
-        type: LOGIN_ASYNC,
-        payload: payloadObject,
-      });
-    }
+    yield put({
+      type: LOGIN_ASYNC,
+      payload: payloadObject,
+    });
   }
 }
 
