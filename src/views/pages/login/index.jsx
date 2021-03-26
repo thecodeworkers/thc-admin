@@ -53,6 +53,13 @@ const Login = (props) => {
     }
   }, [login, showAlert]);
 
+  useEffect(() => {
+    if (login.result != null) {
+      props.history.push("/dashboard");
+      login.result = null;
+    }
+  }, [login, props]);
+
   const loginSchema = Yup.object().shape({
     email: Yup.string()
       .email("Por favor ingrese un correo electrónico valido")
