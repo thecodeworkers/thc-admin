@@ -1,6 +1,8 @@
-export const responsiveSidebar = (payload) => {
+import { SET_SIDEBAR } from "./action-types";
+export const responsiveSidebar = (data) => {
+  console.log("data");
   return {
-    type: "set",
-    sidebarShow: payload,
+    type: SET_SIDEBAR,
+    payload: data,
   };
 };

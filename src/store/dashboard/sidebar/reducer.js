@@ -1,11 +1,17 @@
+import { SET_SIDEBAR } from "./action-types";
+
 const initialState = {
   sidebarShow: "responsive",
 };
 
 const changeState = (state = initialState, { type, payload }) => {
   switch (type) {
-    case "set":
-      return { ...state, ...payload };
+    case SET_SIDEBAR:
+      // console.log({ ...state, ...payload });
+      console.log(type);
+
+      console.log(payload);
+      return { ...state, sidebarShow: payload };
     default:
       return state;
   }
