@@ -77,8 +77,8 @@ const Register = (props) => {
   const formValues = {
     email: "",
     roleType: "",
-    password: "Cimabel1$",
-    confirmPassword: "Cimabel1$",
+    password: "",
+    confirmPassword: "",
   };
 
   const registrationSchema = Yup.object().shape({
