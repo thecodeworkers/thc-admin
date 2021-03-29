@@ -14,17 +14,21 @@ import {
 
 import CIcon from "@coreui/icons-react";
 
+import { responsiveSidebar } from "../store/actions";
+
 // sidebar nav config
 import navigation from "./_nav";
 
 const TheSidebar = () => {
   // const dispatch = useDispatch()
   // const show = useSelector(state => state.sidebarShow)
+  // const show = useSelector(state => state.changeState.sidebarShow)
 
   return (
     <CSidebar
     // show={show}
     // onShowChange={(val) => dispatch({ type: "set", sidebarShow: val })}
+    // onShowChange={(val) => dispatch(responsiveSidebar(val))}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
         <CIcon
