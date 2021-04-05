@@ -45,15 +45,13 @@ const Register = (props) => {
       if (registration.error != null)
         if (registration.error.status === 422) {
           handleUserChange("isValid", false);
-          registration.error = null;
         }
       if (registration.result != null) {
         handleUserChange("isValid", true);
-        registration.result = null;
       }
     };
     checkRegistrationResponse();
-  }, [registration]);
+  }, [registration, action]);
 
   useEffect(() => {
     loadData();
@@ -77,8 +75,8 @@ const Register = (props) => {
   const formValues = {
     email: "",
     roleType: "",
-    password: "",
-    confirmPassword: "",
+    password: "Cimabel1$",
+    confirmPassword: "Cimabel1$",
   };
 
   const registrationSchema = Yup.object().shape({
@@ -125,13 +123,14 @@ const Register = (props) => {
         <CRow className="justify-content-center">
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
-              {response.isValid === "" ? (
+              {registration.result === null && registration.error === null ? (
                 <>
                   <RegisterForm
                     formValues={formValues}
                     postParams={postParams}
                     registrationSchema={registrationSchema}
                     getRolesArray={getRoles.result}
+                    // isLoading={loadingState.isLoading}
                   />
                   <Footer
                     message={

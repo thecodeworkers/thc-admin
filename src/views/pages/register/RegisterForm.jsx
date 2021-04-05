@@ -88,9 +88,11 @@ const RegisterForm = (props) => {
               popover={null}
             />
             <ErrorMessageSpace name="confirmPassword" />
-            <CButton type="submit" color="success" block>
-              Crear Tu Cuenta THC
-            </CButton>
+            {props.isLoading ? null : (
+              <CButton type="submit" color="success" block>
+                Crear Tu Cuenta THC
+              </CButton>
+            )}
           </Form>
           <CRow
             style={{
