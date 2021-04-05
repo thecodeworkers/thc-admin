@@ -32,7 +32,7 @@ const ErrorLink = (props) => {
 };
 
 const Login = (props) => {
-  const { action, login } = props;
+  const { action, login, history } = props;
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -58,11 +58,11 @@ const Login = (props) => {
 
   useEffect(() => {
     if (login.result != null) {
-      props.history.push("/dashboard");
+      history.push("/dashboard");
       setIsLoading(false);
       login.result = null;
     }
-  }, [login, props]);
+  }, [login, history]);
 
   const loginSchema = Yup.object().shape({
     email: Yup.string()
