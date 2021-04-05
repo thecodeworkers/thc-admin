@@ -17,10 +17,9 @@ const Register = (props) => {
 
   const [fetchData, setFetchData] = useState(false);
 
-  const [response, setResponse] = useState({
-    isValid: "",
-    email: "",
-  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [response, setResponse] = useState(false);
 
   const loadData = () => {
     if (getRoles.result === null || getRoles.errors) action.getRoles();
@@ -29,45 +28,27 @@ const Register = (props) => {
     }, 2000);
   };
 
-  const handleUserChange = (name, value) => {
-    setResponse((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
   const rerouteToRegisterForm = (value) => {
-    if (value === true) setResponse({ isValid: "", email: "" });
+    if (value === true) {
+      setResponse(false);
+      sessionStorage.removeItem("email");
+    }
   };
-
-  useEffect(() => {
-    const checkRegistrationResponse = () => {
-      if (registration.error != null)
-        if (registration.error.status === 422) {
-          handleUserChange("isValid", false);
-        }
-      if (registration.result != null) {
-        handleUserChange("isValid", true);
-      }
-    };
-    checkRegistrationResponse();
-  }, [registration, action]);
 
   useEffect(() => {
     loadData();
   });
 
-  // useEffect(() => {
-  //   if (response.isValid !== "") {
-  //     setTimeout(() => {
-  //       handleUserChange("isLoading", true);
-  //     }, 1000);
-  //   }
-  // }, [response]);
+  useEffect(() => {
+    if (registration.result != null || registration.error != null) {
+      setResponse(true);
+      setIsLoading(false);
+    }
+  }, [registration]);
 
   const postParams = (values, resetForm) => {
-    // handleUserChange("isLoading", true);
-    handleUserChange("email", values.email);
+    sessionStorage.setItem("email", values.email);
+    setIsLoading(true);
     action.registration(values);
     resetForm({ values: "" });
   };
@@ -123,14 +104,14 @@ const Register = (props) => {
         <CRow className="justify-content-center">
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
-              {registration.result === null && registration.error === null ? (
+              {!response ? (
                 <>
                   <RegisterForm
                     formValues={formValues}
                     postParams={postParams}
                     registrationSchema={registrationSchema}
                     getRolesArray={getRoles.result}
-                    // isLoading={loadingState.isLoading}
+                    isLoading={isLoading}
                   />
                   <Footer
                     message={
@@ -148,11 +129,13 @@ const Register = (props) => {
               ) : (
                 <ResponseContainer
                   body={
-                    response.isValid ? (
-                      <RegisterSuccessBody email={response.email} />
+                    registration.result != null ? (
+                      <RegisterSuccessBody
+                        email={sessionStorage.getItem("email")}
+                      />
                     ) : (
                       <DuplicateUserBody
-                        email={response.email}
+                        email={sessionStorage.getItem("email")}
                         reRouting={rerouteToRegisterForm}
                       />
                     )

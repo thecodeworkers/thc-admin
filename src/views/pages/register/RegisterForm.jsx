@@ -1,7 +1,13 @@
 import React from "react";
 import { Popover } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
-import { CButton, CCardBody, CInputGroupPrepend, CRow } from "@coreui/react";
+import {
+  CButton,
+  CCardBody,
+  CInputGroupPrepend,
+  CRow,
+  CSpinner,
+} from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import {
   FormInputField,
@@ -88,11 +94,24 @@ const RegisterForm = (props) => {
               popover={null}
             />
             <ErrorMessageSpace name="confirmPassword" />
-            {props.isLoading ? null : (
-              <CButton type="submit" color="success" block>
-                Crear Tu Cuenta THC
-              </CButton>
-            )}
+            <CButton
+              type="submit"
+              color="success"
+              disabled={props.isLoading ? "disabled" : null}
+              block
+            >
+              {props.isLoading ? (
+                <>
+                  <CSpinner
+                    color="#ffffff"
+                    variant="grow"
+                    style={{ width: "1.18rem", height: "1.18rem" }}
+                  />
+                </>
+              ) : (
+                <span>Crear Tu Cuenta THC</span>
+              )}
+            </CButton>
           </Form>
           <CRow
             style={{
