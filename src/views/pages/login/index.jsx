@@ -38,8 +38,11 @@ const Login = (props) => {
 
   const [linkType, setLinkType] = useState({ message: "", status: null });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const displayAlert = () => {
     setShowAlert(true);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -56,6 +59,7 @@ const Login = (props) => {
   useEffect(() => {
     if (login.result != null) {
       props.history.push("/dashboard");
+      setIsLoading(false);
       login.result = null;
     }
   }, [login, props]);
@@ -74,6 +78,7 @@ const Login = (props) => {
   const postParams = (values, resetForm) => {
     setLinkType({ message: "", status: null });
     setShowAlert(false);
+    setIsLoading(true);
     action.login(values);
     resetForm({ values: "" });
   };
@@ -113,6 +118,7 @@ const Login = (props) => {
                     formValues={formValues}
                     postParams={postParams}
                     loginSchema={loginSchema}
+                    isLoading={isLoading}
                   />
                 </CCardBody>
               </CCard>

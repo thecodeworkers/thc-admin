@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { CButton, CCardBody, CRow, CCol } from "@coreui/react";
+import { CButton, CCardBody, CRow, CCol, CSpinner } from "@coreui/react";
 import {
   FormInputField,
   ErrorMessageSpace,
@@ -37,7 +37,17 @@ const LoginForm = (props) => {
             <CRow>
               <CCol xs="6">
                 <CButton type="submit" color="primary" className="px-4">
-                  Ingresar
+                  {props.isLoading ? (
+                    <div style={{ height: "21px", width: "52.7667px" }}>
+                      <CSpinner
+                        color="#ffffff"
+                        variant="grow"
+                        style={{ width: "1.18rem", height: "1.18rem" }}
+                      />
+                    </div>
+                  ) : (
+                    <span>Ingresar</span>
+                  )}
                 </CButton>
               </CCol>
               <CCol xs="6" className="text-right">
