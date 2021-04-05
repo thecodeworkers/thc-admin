@@ -24,7 +24,10 @@ const Register = (props) => {
   const loadData = () => {
     if (getRoles.result === null || getRoles.errors) action.getRoles();
     setTimeout(() => {
+      sessionStorage.removeItem("email");
       setFetchData(true);
+      registration.result = null;
+      registration.error = null;
     }, 2000);
   };
 
@@ -32,6 +35,8 @@ const Register = (props) => {
     if (value === true) {
       setResponse(false);
       sessionStorage.removeItem("email");
+      registration.result = null;
+      registration.error = null;
     }
   };
 
