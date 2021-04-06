@@ -5,7 +5,7 @@ const initialState = {
   error: null,
 };
 
-const reducer = (state = initialState, { type, payload }) => {
+const loginState = (state = initialState, { type, payload }) => {
   switch (type) {
     case LOGIN_ASYNC:
       return { ...state, ...payload };
@@ -15,4 +15,4 @@ const reducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export default reducer;
+export default loginState;

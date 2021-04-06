@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../../store/actions";
 
 import * as Yup from "yup";
@@ -32,7 +31,7 @@ const ErrorLink = (props) => {
 };
 
 const Login = (props) => {
-  const { action, login, history } = props;
+  const { history } = props;
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -40,29 +39,33 @@ const Login = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const loginData = useSelector((state) => state.loginState);
+
+  const dispatch = useDispatch();
+
   const displayAlert = () => {
     setShowAlert(true);
     setIsLoading(false);
   };
 
   useEffect(() => {
-    if (login.error != null) {
+    if (loginData.error != null) {
       displayAlert();
       setLinkType({
-        message: login.error.data.result,
-        status: login.error.status,
+        message: loginData.error.data.result,
+        status: loginData.error.status,
       });
-      login.error = null;
+      loginData.error = null;
     }
-  }, [login, showAlert]);
+  }, [loginData, showAlert]);
 
   useEffect(() => {
-    if (login.result != null) {
+    if (loginData.result != null) {
       history.push("/dashboard");
       setIsLoading(false);
-      login.result = null;
+      loginData.result = null;
     }
-  }, [login, history]);
+  }, [loginData, history]);
 
   const loginSchema = Yup.object().shape({
     email: Yup.string()
@@ -79,7 +82,7 @@ const Login = (props) => {
     setLinkType({ message: "", status: null });
     setShowAlert(false);
     setIsLoading(true);
-    action.login(values);
+    dispatch(login(values));
     resetForm({ values: "" });
   };
 
@@ -154,19 +157,4 @@ const Login = (props) => {
   );
 };
 
-const mapStateToProps = ({ login }) => {
-  return {
-    login,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  const actions = {
-    login,
-  };
-  return {
-    action: bindActionCreators(actions, dispatch),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
