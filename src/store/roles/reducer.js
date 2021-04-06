@@ -5,7 +5,7 @@ const initialState = {
   error: null,
 };
 
-export default (state = initialState, { type, payload }) => {
+const roleState = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_ROLES_ASYNC:
       return { ...state, ...payload };
@@ -14,3 +14,5 @@ export default (state = initialState, { type, payload }) => {
       return state;
   }
 };
+
+export default roleState;

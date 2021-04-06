@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { CCard, CCol, CContainer, CRow } from "@coreui/react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useSelector, useDispatch } from "react-redux";
 import { registration, getRoles } from "../../../store/actions";
 import { Link } from "react-router-dom";
 import Loading from "../../../reusable/spinners/beatloader";
@@ -13,21 +12,23 @@ import { DuplicateUserBody, RegisterSuccessBody } from "./ResponseTypeBody";
 import "./regis_styles.css";
 
 const Register = (props) => {
-  const { action, registration, getRoles } = props;
-
   const [fetchData, setFetchData] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
   const [response, setResponse] = useState(false);
 
+  const rolesData = useSelector((state) => state.roleState);
+
+  const dispatch = useDispatch();
+
   const loadData = () => {
-    if (getRoles.result === null || getRoles.errors) action.getRoles();
+    if (rolesData.result === null || rolesData.errors) dispatch(getRoles());
     setTimeout(() => {
       sessionStorage.removeItem("email");
       setFetchData(true);
-      registration.result = null;
-      registration.error = null;
+      // registration.result = null;
+      // registration.error = null;
     }, 2000);
   };
 
@@ -44,17 +45,17 @@ const Register = (props) => {
     loadData();
   });
 
-  useEffect(() => {
-    if (registration.result != null || registration.error != null) {
-      setResponse(true);
-      setIsLoading(false);
-    }
-  }, [registration]);
+  // useEffect(() => {
+  //   if (registration.result != null || registration.error != null) {
+  //     setResponse(true);
+  //     setIsLoading(false);
+  //   }
+  // }, [registration]);
 
   const postParams = (values, resetForm) => {
     sessionStorage.setItem("email", values.email);
     setIsLoading(true);
-    action.registration(values);
+    // action.registration(values);
     resetForm({ values: "" });
   };
 
@@ -115,7 +116,7 @@ const Register = (props) => {
                     formValues={formValues}
                     postParams={postParams}
                     registrationSchema={registrationSchema}
-                    getRolesArray={getRoles.result}
+                    getRolesArray={rolesData.result}
                     isLoading={isLoading}
                   />
                   <Footer
@@ -157,21 +158,21 @@ const Register = (props) => {
   );
 };
 
-const mapStateToProps = ({ registration, getRoles }) => {
-  return {
-    registration,
-    getRoles,
-  };
-};
+// const mapStateToProps = ({ registration, getRoles }) => {
+//   return {
+//     registration,
+//     getRoles,
+//   };
+// };
 
-const mapDispatchToProps = (dispatch) => {
-  const actions = {
-    registration,
-    getRoles,
-  };
-  return {
-    action: bindActionCreators(actions, dispatch),
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   const actions = {
+//     registration,
+//     getRoles,
+//   };
+//   return {
+//     action: bindActionCreators(actions, dispatch),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default Register;
