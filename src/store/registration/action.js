@@ -1,5 +1,5 @@
 import { REGISTRATION } from "./action-types";
-export const registration = (data) => {
+export const register = (data) => {
   return {
     type: REGISTRATION,
     payload: data,

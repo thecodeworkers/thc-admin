@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { CCard, CCol, CContainer, CRow } from "@coreui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { registration, getRoles } from "../../../store/actions";
+import { register, getRoles } from "../../../store/actions";
 import { Link } from "react-router-dom";
 import Loading from "../../../reusable/spinners/beatloader";
 import Footer from "../../../reusable/form/Footer";
@@ -18,26 +18,29 @@ const Register = (props) => {
 
   const [response, setResponse] = useState(false);
 
+  const [email, setEmail] = useState("");
+
   const rolesData = useSelector((state) => state.roleState);
+
+  const registrationData = useSelector((state) => state.registrationState);
 
   const dispatch = useDispatch();
 
   const loadData = () => {
     if (rolesData.result === null || rolesData.errors) dispatch(getRoles());
     setTimeout(() => {
-      sessionStorage.removeItem("email");
       setFetchData(true);
-      // registration.result = null;
-      // registration.error = null;
+      registrationData.result = null;
+      registrationData.error = null;
     }, 2000);
   };
 
   const rerouteToRegisterForm = (value) => {
     if (value === true) {
       setResponse(false);
-      sessionStorage.removeItem("email");
-      registration.result = null;
-      registration.error = null;
+      setEmail("");
+      registrationData.result = null;
+      registrationData.error = null;
     }
   };
 
@@ -45,17 +48,17 @@ const Register = (props) => {
     loadData();
   });
 
-  // useEffect(() => {
-  //   if (registration.result != null || registration.error != null) {
-  //     setResponse(true);
-  //     setIsLoading(false);
-  //   }
-  // }, [registration]);
+  useEffect(() => {
+    if (registrationData.result != null || registrationData.error != null) {
+      setResponse(true);
+      setIsLoading(false);
+    }
+  }, [registrationData]);
 
   const postParams = (values, resetForm) => {
-    sessionStorage.setItem("email", values.email);
+    setEmail(values.email);
     setIsLoading(true);
-    // action.registration(values);
+    dispatch(register(values));
     resetForm({ values: "" });
   };
 
@@ -135,13 +138,11 @@ const Register = (props) => {
               ) : (
                 <ResponseContainer
                   body={
-                    registration.result != null ? (
-                      <RegisterSuccessBody
-                        email={sessionStorage.getItem("email")}
-                      />
+                    registrationData.result != null ? (
+                      <RegisterSuccessBody email={email} />
                     ) : (
                       <DuplicateUserBody
-                        email={sessionStorage.getItem("email")}
+                        email={email}
                         reRouting={rerouteToRegisterForm}
                       />
                     )
