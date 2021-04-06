@@ -64,13 +64,22 @@ const ErrorMessageSpace = (props) => {
 };
 
 const FormContainer = (props) => (
-  <CContainer>
-    <CRow className="justify-content-center">
-      <CCol md="9" lg="7" xl="6">
-        <CCard className="mx-4">{props.children}</CCard>
-      </CCol>
-    </CRow>
-  </CContainer>
+  <div className="c-app c-default-layout flex-column align-items-center">
+    <TitleSpace />
+    <CContainer>
+      <CRow className="justify-content-center">
+        <CCol md="9" lg="7" xl="6">
+          <CCard className="mx-4">{props.children}</CCard>
+        </CCol>
+      </CRow>
+    </CContainer>
+  </div>
 );
 
-export { FormInputField, ErrorMessageSpace, FormContainer };
+const TitleSpace = () => (
+  <div className="_thc-title">
+    <h1>THC</h1>
+  </div>
+);
+
+export { FormInputField, ErrorMessageSpace, FormContainer, TitleSpace };

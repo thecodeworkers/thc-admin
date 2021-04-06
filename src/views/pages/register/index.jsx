@@ -109,47 +109,42 @@ const Register = (props) => {
   });
 
   return fetchData ? (
-    <div className="c-app c-default-layout flex-column align-items-center">
-      <div className="_thc-title">
-        <h1>THC</h1>
-      </div>
-      <FormContainer>
-        {!response ? (
-          <>
-            <RegisterForm
-              formValues={formValues}
-              postParams={postParams}
-              registrationSchema={registrationSchema}
-              getRolesArray={rolesData.result}
-              isLoading={isLoading}
-            />
-            <Footer
-              message={
-                <Link to="/login">
-                  <span className="_url-styles" style={{ color: "#768192" }}>
-                    Ya tienes una cuenta THC? Ingresa
-                  </span>
-                </Link>
-              }
-            />
-          </>
-        ) : (
-          <ResponseContainer
-            body={
-              registrationData.result != null ? (
-                <RegisterSuccessBody email={email} />
-              ) : (
-                <DuplicateUserBody
-                  email={email}
-                  reRouting={rerouteToRegisterForm}
-                  login={history.push}
-                />
-              )
+    <FormContainer>
+      {!response ? (
+        <>
+          <RegisterForm
+            formValues={formValues}
+            postParams={postParams}
+            registrationSchema={registrationSchema}
+            getRolesArray={rolesData.result}
+            isLoading={isLoading}
+          />
+          <Footer
+            message={
+              <Link to="/login">
+                <span className="_url-styles" style={{ color: "#768192" }}>
+                  Ya tienes una cuenta THC? Ingresa
+                </span>
+              </Link>
             }
           />
-        )}
-      </FormContainer>
-    </div>
+        </>
+      ) : (
+        <ResponseContainer
+          body={
+            registrationData.result != null ? (
+              <RegisterSuccessBody email={email} />
+            ) : (
+              <DuplicateUserBody
+                email={email}
+                reRouting={rerouteToRegisterForm}
+                login={history.push}
+              />
+            )
+          }
+        />
+      )}
+    </FormContainer>
   ) : (
     <Loading color="#ff0000" />
   );

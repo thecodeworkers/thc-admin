@@ -15,6 +15,7 @@ import {
 } from "@coreui/react";
 import LoginForm from "./LoginForm";
 import ErrorAlert from "../../../reusable/errors/ErrorAlert";
+import { TitleSpace } from "../../../reusable/form/FormItem";
 import "../register/regis_styles.css";
 import "./login_styles.css";
 
@@ -92,7 +93,8 @@ const Login = (props) => {
   };
 
   return (
-    <div className="c-app c-default-layout flex-row align-items-center">
+    <div className="c-app c-default-layout flex-column align-items-center">
+      <TitleSpace />
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="8">
