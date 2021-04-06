@@ -4,7 +4,7 @@ import { CButton, CCardBody, CRow, CCol, CSpinner } from "@coreui/react";
 import {
   FormInputField,
   ErrorMessageSpace,
-} from "../../../reusable/form/input";
+} from "../../../reusable/form/FormItem";
 
 const LoginForm = (props) => {
   return (

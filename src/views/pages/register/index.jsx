@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { CCard, CCol, CContainer, CRow } from "@coreui/react";
+// import { CCard, CCol, CContainer, CRow } from "@coreui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { register, getRoles } from "../../../store/actions";
 import { Link } from "react-router-dom";
 import Loading from "../../../reusable/spinners/beatloader";
 import Footer from "../../../reusable/form/Footer";
+import { FormContainer } from "../../../reusable/form/FormItem";
+
 import RegisterForm from "./RegisterForm";
 import ResponseContainer from "./ReponseContainer";
 import { DuplicateUserBody, RegisterSuccessBody } from "./ResponseTypeBody";
@@ -111,51 +113,42 @@ const Register = (props) => {
       <div className="_thc-title">
         <h1>THC</h1>
       </div>
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md="9" lg="7" xl="6">
-            <CCard className="mx-4">
-              {!response ? (
-                <>
-                  <RegisterForm
-                    formValues={formValues}
-                    postParams={postParams}
-                    registrationSchema={registrationSchema}
-                    getRolesArray={rolesData.result}
-                    isLoading={isLoading}
-                  />
-                  <Footer
-                    message={
-                      <Link to="/login">
-                        <span
-                          className="_url-styles"
-                          style={{ color: "#768192" }}
-                        >
-                          Ya tienes una cuenta THC? Ingresa
-                        </span>
-                      </Link>
-                    }
-                  />
-                </>
+      <FormContainer>
+        {!response ? (
+          <>
+            <RegisterForm
+              formValues={formValues}
+              postParams={postParams}
+              registrationSchema={registrationSchema}
+              getRolesArray={rolesData.result}
+              isLoading={isLoading}
+            />
+            <Footer
+              message={
+                <Link to="/login">
+                  <span className="_url-styles" style={{ color: "#768192" }}>
+                    Ya tienes una cuenta THC? Ingresa
+                  </span>
+                </Link>
+              }
+            />
+          </>
+        ) : (
+          <ResponseContainer
+            body={
+              registrationData.result != null ? (
+                <RegisterSuccessBody email={email} />
               ) : (
-                <ResponseContainer
-                  body={
-                    registrationData.result != null ? (
-                      <RegisterSuccessBody email={email} />
-                    ) : (
-                      <DuplicateUserBody
-                        email={email}
-                        reRouting={rerouteToRegisterForm}
-                        login={history.push}
-                      />
-                    )
-                  }
+                <DuplicateUserBody
+                  email={email}
+                  reRouting={rerouteToRegisterForm}
+                  login={history.push}
                 />
-              )}
-            </CCard>
-          </CCol>
-        </CRow>
-      </CContainer>
+              )
+            }
+          />
+        )}
+      </FormContainer>
     </div>
   ) : (
     <Loading color="#ff0000" />

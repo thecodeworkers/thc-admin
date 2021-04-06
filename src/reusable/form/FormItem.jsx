@@ -1,9 +1,13 @@
 import React from "react";
 import {
+  CCard,
+  CContainer,
+  CCol,
   CPopover,
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
+  CRow,
 } from "@coreui/react";
 
 import CIcon from "@coreui/icons-react";
@@ -59,4 +63,14 @@ const ErrorMessageSpace = (props) => {
   );
 };
 
-export { FormInputField, ErrorMessageSpace };
+const FormContainer = (props) => (
+  <CContainer>
+    <CRow className="justify-content-center">
+      <CCol md="9" lg="7" xl="6">
+        <CCard className="mx-4">{props.children}</CCard>
+      </CCol>
+    </CRow>
+  </CContainer>
+);
+
+export { FormInputField, ErrorMessageSpace, FormContainer };

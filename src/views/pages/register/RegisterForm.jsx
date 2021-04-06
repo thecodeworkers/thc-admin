@@ -12,7 +12,7 @@ import CIcon from "@coreui/icons-react";
 import {
   FormInputField,
   ErrorMessageSpace,
-} from "../../../reusable/form/input";
+} from "../../../reusable/form/FormItem";
 import "./regis_styles.css";
 
 const popover = (
