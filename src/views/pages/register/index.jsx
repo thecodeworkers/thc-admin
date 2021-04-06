@@ -159,21 +159,4 @@ const Register = (props) => {
   );
 };
 
-// const mapStateToProps = ({ registration, getRoles }) => {
-//   return {
-//     registration,
-//     getRoles,
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   const actions = {
-//     registration,
-//     getRoles,
-//   };
-//   return {
-//     action: bindActionCreators(actions, dispatch),
-//   };
-// };
-
 export default Register;
