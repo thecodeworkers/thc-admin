@@ -12,6 +12,8 @@ import { DuplicateUserBody, RegisterSuccessBody } from "./ResponseTypeBody";
 import "./regis_styles.css";
 
 const Register = (props) => {
+  const { history } = props;
+
   const [fetchData, setFetchData] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -144,6 +146,7 @@ const Register = (props) => {
                       <DuplicateUserBody
                         email={email}
                         reRouting={rerouteToRegisterForm}
+                        login={history.push}
                       />
                     )
                   }

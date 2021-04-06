@@ -12,8 +12,21 @@ const DuplicateUserBody = (props) => (
     </div>
     <h5>Eres un usuario existente?</h5>
     <div style={{ marginBottom: "15px" }}>
-      <p style={{ marginBottom: "4px" }}>Ingresa</p>
-      <p style={{ marginBottom: "4px" }}>Olvidaste tu contraseña?</p>
+      <p style={{ marginBottom: "4px" }}>
+        <span className="_url-styles" onClick={() => props.login("/login")}>
+          Ingresa
+        </span>
+      </p>
+      <p style={{ marginBottom: "4px" }}>
+        <span className="_url-styles" onClick={() => {}}>
+          Olvidaste tu contraseña?
+        </span>
+      </p>
+      <p style={{ marginBottom: "4px" }}>
+        <span className="_url-styles" onClick={() => {}}>
+          Reenviar link de confirmación?
+        </span>
+      </p>
     </div>
     <h5>Nuevo Usuario</h5>
     <div style={{ marginBottom: "15px" }}>
