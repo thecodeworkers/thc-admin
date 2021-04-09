@@ -78,7 +78,9 @@ const FormContainer = (props) => (
 
 const TitleSpace = () => (
   <div className="_thc-title">
-    <h1>THC</h1>
+    <a href="http://localhost:3000/">
+      <img src="img/FFF_THC02.png" alt="THC" style={{ width: "15rem" }} />
+    </a>
   </div>
 );
 
