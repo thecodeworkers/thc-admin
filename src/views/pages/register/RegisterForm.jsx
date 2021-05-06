@@ -113,30 +113,6 @@ const RegisterForm = (props) => {
               )}
             </CButton>
           </Form>
-          <CRow
-            style={{
-              justifyContent: "center",
-              paddingLeft: "14px",
-              paddingRight: "14px",
-            }}
-          >
-            <div
-              style={{
-                justifyContent: "center",
-                paddingTop: "14px",
-                paddingBottom: "14px",
-                color: "#768192",
-              }}
-            >
-              Or
-            </div>
-            <CButton className="btn-facebook mb-1" block>
-              <span>facebook</span>
-            </CButton>
-            <CButton className="_btn-google mb-1" block>
-              <span>google</span>
-            </CButton>
-          </CRow>
         </CCardBody>
       )}
     </Formik>

@@ -111,7 +111,7 @@ const Register = (props) => {
   return fetchData ? (
     <FormContainer>
       {!response ? (
-        <>
+        <React.Fragment>
           <RegisterForm
             formValues={formValues}
             postParams={postParams}
@@ -128,7 +128,7 @@ const Register = (props) => {
               </Link>
             }
           />
-        </>
+        </React.Fragment>
       ) : (
         <ResponseContainer
           body={
