@@ -53,7 +53,6 @@ const ErrorMessageSpace = (props) => {
       <ErrorMessage name={props.name}>
         {(msg) => (
           <div>
-            {" "}
             <img alt="exclamation sign" src={exclamation} />
             <span className="_form-error-message">{msg}</span>
           </div>
